@@ -103,3 +103,9 @@ body {
         word-spacing: 2px
     }
 }
+
+.button-option {
+    background-color: transparent;
+    border: none;
+    color: white;
+}

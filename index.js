@@ -102,7 +102,26 @@ getDomanda = () => {
 	} else {
 		domanda.innerHTML = `Quali scale hanno ${SCALA[0][1]} variazioni ?`;
 		risposta.innerHTML = risposteTemplate2;
+		rispondi.setAttribute("data-caso", "1");
 	}
+	
+	let labels = document.getElementsByTagName("label");
+	[].forEach.call(labels, (label) => {
+		label.addEventListener("click", (e) => {
+			e.preventDefault()
+			let radio = label.getElementsByTagName("input")[0]
+			if(radio.checked){
+				e.stopImmediatePropagation()
+				radio.classList.remove("active")
+				radio.checked = false
+			} else {
+				radio.checked = true
+			}
+			console.log(radio)
+		}) 
+		
+	});
+
 };
 
 //return an array of keys that match on a certain value
@@ -122,8 +141,7 @@ function getRes(obj, val) {
 $("#modale").on("show.bs.modal", function (event) {
 	let caso = rispondi.getAttribute("data-caso");
 	let inputs = document.getElementsByTagName("input");
-	console.log(inputs.length);
-	if (caso == 0) {
+	if (caso == 0) { // Domanda 0
 		let arr_res = new Array();
 		[].forEach.call(inputs, (el) => {
 			if (el.checked) {
@@ -146,7 +164,7 @@ $("#modale").on("show.bs.modal", function (event) {
          body.innerHTML = `<h2 class="w-100 text-center"><strong>Sbagliato dioporco!</strong></h2><hr><h3 class="text-center">La scala di ${SCALA[0][0]} ha ${SCALA[0][1]} variazioni</h3>`;
       }
       
-	} else {
+	} else { // Domanda 1
 		let x = getRes(DATABASE, SCALA[0][1]);
 		let arr_res = new Array();
 		[].forEach.call(inputs, (el) => {
