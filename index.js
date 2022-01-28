@@ -117,7 +117,6 @@ getDomanda = () => {
 			} else {
 				radio.checked = true
 			}
-			console.log(radio)
 		}) 
 		
 	});
@@ -173,7 +172,6 @@ $("#modale").on("show.bs.modal", function (event) {
 			}
 		});
 		if (arr_res.length == 2) {
-			console.log(x);
 			if ((arr_res[0] === x[0] || arr_res[0] === x[1]) && (arr_res[1] === x[0] || arr_res[1] === x[1])) {
 				modal_content.style.backgroundColor = "#4E9F3D";
 				modal_content.style.color = "white";
