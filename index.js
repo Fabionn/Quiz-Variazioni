@@ -122,23 +122,32 @@ function getRes(obj, val) {
 $("#modale").on("show.bs.modal", function (event) {
 	let caso = rispondi.getAttribute("data-caso");
 	let inputs = document.getElementsByTagName("input");
-
+	console.log(inputs.length);
 	if (caso == 0) {
+		let arr_res = new Array();
 		[].forEach.call(inputs, (el) => {
 			if (el.checked) {
-				if (el.name == SCALA[0][1]) {
-					modal_content.style.backgroundColor = "#4E9F3D";
-					modal_content.style.color = "white";
-					body.innerHTML = `<h2 class="w-100 text-center"><strong>Esatto Diocane!</strong></h2>`;
-				} else {
-					modal_content.style.backgroundColor = "#E94560";
-					modal_content.style.color = "white";
-					body.innerHTML = `<h2 class="w-100 text-center"><strong>Sbagliato dioporco!</strong></h2><hr><h3 class="text-center">La scala di ${SCALA[0][0]} ha ${SCALA[0][1]} variazioni</h3>`;
-				}
+				arr_res.push(el.name);
 			}
 		});
+      if(arr_res.length > 0){
+         if (arr_res[0] == SCALA[0][1]) {
+            modal_content.style.backgroundColor = "#4E9F3D";
+            modal_content.style.color = "white";
+            body.innerHTML = `<h2 class="w-100 text-center"><strong>Esatto Diocane!</strong></h2>`;
+         } else {
+            modal_content.style.backgroundColor = "#E94560";
+            modal_content.style.color = "white";
+            body.innerHTML = `<h2 class="w-100 text-center"><strong>Sbagliato dioporco!</strong></h2><hr><h3 class="text-center">La scala di ${SCALA[0][0]} ha ${SCALA[0][1]} variazioni</h3>`;
+         }
+      } else {
+         modal_content.style.backgroundColor = "#E94560";
+         modal_content.style.color = "white";
+         body.innerHTML = `<h2 class="w-100 text-center"><strong>Sbagliato dioporco!</strong></h2><hr><h3 class="text-center">La scala di ${SCALA[0][0]} ha ${SCALA[0][1]} variazioni</h3>`;
+      }
+      
 	} else {
-      let x = getRes(DATABASE, SCALA[0][1]);
+		let x = getRes(DATABASE, SCALA[0][1]);
 		let arr_res = new Array();
 		[].forEach.call(inputs, (el) => {
 			if (el.checked) {
@@ -159,12 +168,11 @@ $("#modale").on("show.bs.modal", function (event) {
 		} else {
 			modal_content.style.backgroundColor = "#E94560";
 			modal_content.style.color = "white";
-         if(SCALA[0][1] != 0){
-            body.innerHTML = `<h2 class="w-100 text-center"><strong>Sbagliato dioporco!</strong></h2><hr><h3 class="text-center">Le scale che hanno ${SCALA[0][1]} variazioni sono ${x[0]} , ${x[1]}</h3>`;
-         } else {
-            body.innerHTML = `<h2 class="w-100 text-center"><strong>Ma dai diocane ohhhhh!</strong></h2><hr><h3 class="text-center">Le scala che ha ${SCALA[0][1]} variazione è ${x[0]} , lo so pur'io</h3>`;
-         }
-			
+			if (SCALA[0][1] != 0) {
+				body.innerHTML = `<h2 class="w-100 text-center"><strong>Sbagliato dioporco!</strong></h2><hr><h3 class="text-center">Le scale che hanno ${SCALA[0][1]} variazioni sono ${x[0]} , ${x[1]}</h3>`;
+			} else {
+				body.innerHTML = `<h2 class="w-100 text-center"><strong>Ma dai diocane ohhhhh!</strong></h2><hr><h3 class="text-center">Le scala che ha ${SCALA[0][1]} variazione è ${x[0]} , lo so pur'io</h3>`;
+			}
 		}
 	}
 });
